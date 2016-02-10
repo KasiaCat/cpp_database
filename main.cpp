@@ -37,13 +37,35 @@ public:
     string imie;
     string nazwisko;
     string singiel;
-    string ile_sprzedanych_plyt;
+    unsigned long int ile_sprzedanych_plyt;
+    double  cena;
     string dataUrodzin;
     string miasto;
     void listing_danych(int k);
+    void kupno();
 };
 
 Artysci wykonawcy[MAX];
+
+int ile_plyt_kupic( int d )
+{
+    return d*wykonawcy[rekord].cena;
+}
+
+void Artysci::kupno()
+{
+    int ile;
+
+    cout << "Ile plyt kupic?" << endl;
+    cout << " > ";
+    cin >> ile;
+    cout << "Rachunek wynosi:  " << ile_plyt_kupic(ile) << "$";
+}
+
+void zarobki_artysty()
+{
+    wykonawcy[rekord].ile_sprzedanych_plyt * wykonawcy[rekord].cena;
+}
 
 
 void Artysci::listing_danych(int k)
@@ -65,8 +87,10 @@ void Artysci::listing_danych(int k)
         gotoxy (5, 15);
         cout << "Ilosc sprzedanych plyt w 1szym tygodniu: " << ile_sprzedanych_plyt << endl;
         gotoxy (5, 17);
-        cout <<  "Data urodzenia: " << dataUrodzin << endl;
+        cout << "Cena albumu: " << cena << endl;
         gotoxy (5, 19);
+        cout <<  "Data urodzenia: " << dataUrodzin << endl;
+        gotoxy (5, 21);
         cout << "Miasto: " << miasto << endl;
 
     } else {
@@ -99,7 +123,12 @@ void odczytPliku()
         getline(plik, wykonawcy[znak].nazwisko);
         getline(plik, wykonawcy[znak].singiel);
 
-        getline(plik, wykonawcy[znak].ile_sprzedanych_plyt);
+        getline(plik, linia);
+        wykonawcy[znak].ile_sprzedanych_plyt = atoi(linia.c_str());
+        //getline(plik, wykonawcy[znak].ile_sprzedanych_plyt);
+
+        getline(plik, linia);
+        wykonawcy[znak].cena = atoi(linia.c_str());
 
         getline(plik, wykonawcy[znak].dataUrodzin);
         getline(plik, wykonawcy[znak].miasto);
@@ -129,6 +158,7 @@ void zapisDoPliku()
             plik << wykonawcy[i].nazwisko << endl;
             plik << wykonawcy[i].singiel << endl;
             plik << wykonawcy[i].ile_sprzedanych_plyt << endl;
+            plik << wykonawcy[i].cena << endl;
             plik << wykonawcy[i].dataUrodzin << endl;
             plik << wykonawcy[i].miasto << endl;
         }
@@ -141,6 +171,7 @@ void zapisDoPliku()
 void chodzenie_po_danych(int k)
 {
     czyszczenie();
+
     if (wykonawcy[rekord].numerNaLisciePrzebojow == 0)
     {
         cout << "Brak numeru zerowego, baza nie zostala zaladowana!" << endl;
@@ -152,12 +183,23 @@ void chodzenie_po_danych(int k)
     char znak;
     cout << "6. Nastepny wykonawca" << endl;
     cout << "4. Poprzedni wykonawca" << endl;
+    cout << "2. Sprzedaz" << endl;
     cout << "8. Menu glowne" << endl;
     cout << " > ";
 
     znak = getch();
     switch(znak)
     {
+
+     case '2':
+        czyszczenie();
+        wykonawcy[rekord].kupno();
+        system("PAUSE");
+
+        rekord++;
+        wykonawcy[rekord].listing_danych(k);
+        chodzenie_po_danych(k);
+
 
      case '4':
         czyszczenie();
