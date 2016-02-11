@@ -43,13 +43,21 @@ public:
     string miasto;
     void listing_danych(int k);
     void kupno();
+    void zarobki();
+    void sortowanie_cenowe_rosnace();
+    void sortowanie_rosnace_po_singlu();
+    void sortowanie_po_ilosci_plyt();
 };
 
 Artysci wykonawcy[MAX];
 
 int ile_plyt_kupic( int d )
 {
-    return d*wykonawcy[rekord].cena;
+    unsigned long int suma = 0;
+
+    suma = d*wykonawcy[rekord].cena;
+
+    return suma;
 }
 
 void Artysci::kupno()
@@ -62,9 +70,70 @@ void Artysci::kupno()
     cout << "Rachunek wynosi:  " << ile_plyt_kupic(ile) << "$";
 }
 
-void zarobki_artysty()
+int zarobki_artysty()
 {
-    wykonawcy[rekord].ile_sprzedanych_plyt * wykonawcy[rekord].cena;
+    unsigned long long int suma = 0;
+
+    suma =  wykonawcy[rekord].ile_sprzedanych_plyt * wykonawcy[rekord].cena;
+
+    return suma;
+}
+
+void Artysci::zarobki()
+{
+    cout << "Dochod artysty: " << zarobki_artysty() << "$";
+}
+
+void Artysci::sortowanie_cenowe_rosnace()
+{
+    for (int nr = 2; nr <= licznik; nr++)
+      {
+          wykonawcy[0] = wykonawcy[nr];
+          int previous = nr - 1;
+
+          while ( wykonawcy[previous].cena > wykonawcy[0].cena )
+            {
+              wykonawcy[previous + 1] = wykonawcy[previous];
+              previous--;
+            }
+          wykonawcy[previous + 1] = wykonawcy[0];
+      }
+
+}
+
+
+void Artysci::sortowanie_po_ilosci_plyt()
+{
+    for (int nr = 2; nr <= licznik; nr++)
+      {
+          wykonawcy[0] = wykonawcy[nr];
+          int previous = nr - 1;
+
+          while ( wykonawcy[previous].ile_sprzedanych_plyt > wykonawcy[0].ile_sprzedanych_plyt )
+            {
+              wykonawcy[previous + 1] = wykonawcy[previous];
+              previous--;
+            }
+          wykonawcy[previous + 1] = wykonawcy[0];
+      }
+
+}
+
+void Artysci::sortowanie_rosnace_po_singlu()
+{
+    for (int nr = 2; nr <= licznik; nr++)
+      {
+          wykonawcy[0] = wykonawcy[nr];
+          int previous = nr - 1;
+
+          while ( wykonawcy[previous].singiel > wykonawcy[0].singiel )
+            {
+              wykonawcy[previous + 1] = wykonawcy[previous];
+              previous--;
+            }
+          wykonawcy[previous + 1] = wykonawcy[0];
+      }
+
 }
 
 
@@ -181,9 +250,15 @@ void chodzenie_po_danych(int k)
     }
 
     char znak;
-    cout << "6. Nastepny wykonawca" << endl;
+    gotoxy(5, 23);
     cout << "4. Poprzedni wykonawca" << endl;
+    gotoxy(52, 23);
+    cout << "6. Nastepny wykonawca" << endl;
+    gotoxy(34 ,24);
     cout << "2. Sprzedaz" << endl;
+    gotoxy(5, 26);
+    cout << "3. Podlicz dochod artysty" << endl;
+    gotoxy(32, 1);
     cout << "8. Menu glowne" << endl;
     cout << " > ";
 
@@ -193,10 +268,22 @@ void chodzenie_po_danych(int k)
 
      case '2':
         czyszczenie();
+        cout << "--------------------------------------------------------------------------------" << endl;
         wykonawcy[rekord].kupno();
-        system("PAUSE");
+        cout << endl << "--------------------------------------------------------------------------------";
+        Sleep(2000);
 
-        rekord++;
+        wykonawcy[rekord].listing_danych(k);
+        chodzenie_po_danych(k);
+
+     case '3':
+        czyszczenie();
+        cout << "--------------------------------------------------------------------------------" << endl;
+        wykonawcy[rekord].zarobki();
+        cout << endl << "--------------------------------------------------------------------------------";
+
+        Sleep(2000);
+
         wykonawcy[rekord].listing_danych(k);
         chodzenie_po_danych(k);
 
@@ -213,6 +300,7 @@ void chodzenie_po_danych(int k)
         chodzenie_po_danych(k);
 
         break;
+
 
     case '6':
         czyszczenie();
@@ -232,7 +320,7 @@ void chodzenie_po_danych(int k)
     default:
         {
         cout << "Blad! Wybierz cyfre sposrod podanych!";
-        system("Pause");
+        Sleep(1000);
         chodzenie_po_danych(k);
         }
 
@@ -257,49 +345,110 @@ void menu()
     cout << "Baza plyt wydanych w latach 2000-2015" << endl;
     gotoxy (24, 6);
     cout << "1. Spis plyt - wyswietlanie " << endl;
-    gotoxy (24, 8);
-    cout << "3. Wyjdz z programu " << endl;
+    gotoxy(24, 8);
+    cout << "2. Posortuj rosnaco wedlug ceny" << endl;
+    gotoxy(24, 10);
+    cout << "3. Posortuj rosnaco wedlug singla" << endl;
+    gotoxy(24, 12);
+    cout << "4. Posortuj rosnaco wedlug ilosci sprzedanych plyt" << endl;
+    gotoxy (24, 14);
+    cout << "5. Wyjdz z programu " << endl;
 
-    gotoxy (30, 12);
+    gotoxy (30, 16);
     cout << "Twoj wybor to: ";
-    gotoxy (30, 14);
+    gotoxy (30, 18);
     cout << " > ";
     cin >> wybor;
+    getchar();
 
     switch(wybor)
     {
         case '1':
             {
             czyszczenie();
-            cout << endl << "Wyswietlic artystki czy artystow ? " << endl << endl;
-            cout << "Wybierz 1, by wyswietlic arystki, albo wybierz 0, by wyswietlic arystow.";
-            cout << endl << " > ";
+            gotoxy(22, 5);
+            cout << "Wyswietlic artystki czy artystow ? " << endl << endl;
+            gotoxy(22, 7);
+            cout << "Wybierz 1, by wyswietlic arystki, ";
+            gotoxy(22, 9);
+            cout <<"Wybierz 0, by wyswietlic arystow.";
+            gotoxy(22, 11);
+            cout << "wcisnij 8, by powrocic do menu";
 
+            do {
+
+            gotoxy(22, 18);
+            cout <<" > ";
             cin >> deal;
+            getchar();
+
             if( deal == 1)
                 chodzenie_po_danych(1);
             else if( deal == 0 )
                 chodzenie_po_danych(0);
-            else
-            {
-                cout << "Musisz wybrac 0 albo 1!";
+            else if (deal == 8)
                 menu();
+
+            else {
+                gotoxy(22, 16);
+                cout << "Wybierz 1 lub 0!" << endl;
             }
+
+            } while ( deal >=2 );
 
             }
 
 
         break;
+
+        case '2':
+                czyszczenie();
+                gotoxy(22, 9);
+                cout << "By posortowac wszystkich artystow i artystki ";
+                gotoxy(22, 10);
+                cout << "wedlug ceny albumu, wcisnij enter" << endl;
+                gotoxy(22, 11);
+                getchar();
+
+                    wykonawcy[rekord].sortowanie_cenowe_rosnace();
+                    menu();
+
         case '3':
+                czyszczenie();
+                gotoxy(22, 9);
+                cout << "By posortowac wszystkich artystow i artystki ";
+                gotoxy(22, 10);
+                cout << "wedlug nazwy singla, wcisnij enter" << endl;
+                gotoxy(22, 11);
+                getchar();
+
+                    wykonawcy[rekord].sortowanie_rosnace_po_singlu();
+                    menu();
+
+        case '4':
+                czyszczenie();
+                gotoxy(22, 9);
+                cout << "By posortowac wszystkich artystow i artystki ";
+                gotoxy(22, 10);
+                cout << "wedlug ilosci sprzedanych krazkow, wcisnij enter" << endl;
+                gotoxy(22, 11);
+                getchar();
+
+                    wykonawcy[rekord].sortowanie_po_ilosci_plyt();
+                    menu();
+
+        case '5':
             zapisDoPliku();
             koniec();
         break;
 
         default:
             {
+                gotoxy(30, 18);
                 cout<< "Wybierz jeszcze raz!" << endl;
-                system("Pause");
+                Sleep(1000);
                 menu();
+
             }
     }
 
@@ -307,13 +456,13 @@ void menu()
 
 void start()
 {
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),233); //910 //253
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),279); //910 //253 //233 - zolty
 
 }
 
 void koniec()
 {
-    cout << endl << "Do widzenia, nacisnij Enter by zamknac baze danych";
+    cout << endl << "Do widzenia, nacisnij Enter by zamknac baze danych" << endl;
     exit(0);
     cin.ignore();
     cin.get();

@@ -1,4 +1,4 @@
-1
+2
 1
 27
 Taylor
@@ -8,7 +8,7 @@ Red
 30
 13-12-1989
 Reading
-2
+3
 0
 31
 Bruno
@@ -18,7 +18,7 @@ Treasure
 29
 08-10-1985
 Honolulu
-3
+4
 1
 35
 Beyonce
@@ -28,7 +28,7 @@ Crazy in Love
 35
 04-09-1981
 Houston
-4
+5
 0
 39
 Kanye
@@ -38,7 +38,7 @@ Jesus
 78
 08-06-1977
 Atlanta
-5
+6
 0
 39
 Christopher
@@ -48,7 +48,7 @@ Sky in Stars
 35
 02-03-1977
 Exeter
-6
+7
 1
 28
 Rihanna
@@ -58,7 +58,7 @@ Rehab
 29
 20-02-1988
 Barbados
-7
+8
 0
 43
 Corey
@@ -68,7 +68,7 @@ The devil's in
 21
 08-12-1973
 Iowa
-8
+9
 0
 40
 Kyo
@@ -78,7 +78,7 @@ Dir
 23
 16-02-1976
 Kioto
-9
+10
 0
 45
 Jared
@@ -88,7 +88,7 @@ The Kill
 24
 26-12-1971
 Louizjana
-10
+11
 0
 38
 Matthew
@@ -98,7 +98,7 @@ Absolution
 32
 09-06-1978
 Cambridge
-11
+12
 1
 28
 Adele
@@ -108,3 +108,13 @@ Rolling in the deep
 49
 05-05-1988
 Londyn
+13
+0
+37
+Adam
+Levine
+Sugar
+7678943213
+59
+18-03-1979
+Los Angeles
