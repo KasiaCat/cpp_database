@@ -49,6 +49,9 @@ public:
     void sortowanie_rosnace_po_singlu();
     void sortowanie_po_ilosci_plyt();
     void dodaj_rekord();
+    void usuwanie_rekordu();
+    int usuwanie_rekordu(int do_usuniecia);
+    void usun();
 };
 
 Artysci wykonawcy[MAX];
@@ -178,30 +181,38 @@ void Artysci::dodaj_rekord()
                 Sleep(1000);
             } else {
 
-                gotoxy(34, 1);
+                gotoxy(30, 1);
                 cout << " Dodaj album do kolekcji ";
-                gotoxy (5, 2);
+                gotoxy (2, 2);
                 cout << "*************************************************************************" << endl;
 
-                gotoxy (34, 5);
+                gotoxy (26, 5);
                 numerNaLisciePrzebojow = licznik + 1;
                 cout << "Numer na liscie przebojow: " << numerNaLisciePrzebojow;
 
-                gotoxy (34, 7);
+                gotoxy(26, 7);
+                cout << "Wokalistka/Wokalista: ";
+                gotoxy(26, 9);
+                cout << "Wpisz 0 - artysta, 1 - artystka";
+
+                gotoxy(48, 7);
+                cin >> kobieta_czy_mezczyzna;
+
+                gotoxy (26, 11);
                 cout << "Wiek: "; cin >> wiek;
-                gotoxy (34, 9);
+                gotoxy (26, 13);
                 cout << "Imie artysty: "; cin >> imie;
-                gotoxy (34, 11);
+                gotoxy (26, 15);
                 cout << "Nazwisko artysty: "; cin >> nazwisko;
-                gotoxy (34, 13);
+                gotoxy (26, 17);
                 cout << "Nazwa albumu: "; cin >> singiel;
-                gotoxy (34, 15);
+                gotoxy (26, 19);
                 cout << "Ilosc sprzedanych plyt w 1szym tygodniu: "; cin >> ile_sprzedanych_plyt;
-                gotoxy (34, 17);
+                gotoxy (26, 21);
                 cout << "Cena albumu: "; cin >> cena;
-                gotoxy (34, 19);
+                gotoxy (26, 23);
                 cout <<  "Data urodzenia: "; cin >> dataUrodzin;
-                gotoxy (34, 21);
+                gotoxy (26, 25);
                 cout << "Miasto: "; cin >> miasto;
 
                 licznik++;
@@ -209,6 +220,35 @@ void Artysci::dodaj_rekord()
             }
 
 }
+
+
+int Artysci::usuwanie_rekordu(int do_usuniecia)
+{
+    int i, j;
+    for (i = 0; i < licznik; i++)
+    {
+        if (wykonawcy[i].numerNaLisciePrzebojow == do_usuniecia)
+        {
+            for (j = i + 1; j < licznik; j++)
+            {
+                wykonawcy[j - 1] = wykonawcy[j];
+            }
+            --licznik;
+            return "usuwam: ", do_usuniecia;
+        }
+    }
+}
+
+void Artysci::usun()
+{
+    int ktory;
+    gotoxy(22, 11);
+    cout << "Ktory indeks usunac: "; cin >> ktory;
+    getchar();
+
+    cout << usuwanie_rekordu(ktory);
+}
+
 
 void odczytPliku()
 {
@@ -384,12 +424,15 @@ void czyszczenie()
 void modyfikacje()
 {
     char wybor;
+    //int ktory;
     czyszczenie();
 
     gotoxy(24, 8);
     cout << "0. Powrot do menu glownego" << endl;
     gotoxy(24, 10);
     cout << "1. Dodaj pozycje do bazy" << endl;
+    gotoxy(24, 12);
+    cout << "2. Usun pozycje do bazy" << endl;
 
 
     gotoxy (30, 16);
@@ -408,12 +451,24 @@ void modyfikacje()
             {
                 czyszczenie();
                 wykonawcy[licznik].dodaj_rekord();
+                gotoxy(26, 27);
                 zapisDoPliku();
                 rekord++;
+                Sleep(1000);
                 modyfikacje();
             }
 
+        case '2':
+            {
+                czyszczenie();
+                wykonawcy[licznik].usun();
+                gotoxy(26, 27);
+                zapisDoPliku();
+                rekord++;
+                Sleep(1000);
+                modyfikacje();
 
+            }
 
         default:
             {
@@ -531,6 +586,7 @@ void menu()
                     menu();
 
         case '5':
+            gotoxy(30, 21);
             zapisDoPliku();
             koniec();
         break;
@@ -555,7 +611,8 @@ void start()
 
 void koniec()
 {
-    cout << endl << "Do widzenia, nacisnij Enter by zamknac baze danych" << endl;
+    gotoxy(20, 23);
+    cout << "Nacisnij Enter by zamknac baze danych" << endl;
     exit(0);
     cin.ignore();
     cin.get();
