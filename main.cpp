@@ -28,6 +28,7 @@ void zapisDoPliku();
 void czyszczenie();
 void menu();
 void chodzenie_po_danych();
+void modyfikacje();
 
 class Artysci {
 public:
@@ -47,6 +48,7 @@ public:
     void sortowanie_cenowe_rosnace();
     void sortowanie_rosnace_po_singlu();
     void sortowanie_po_ilosci_plyt();
+    void dodaj_rekord();
 };
 
 Artysci wykonawcy[MAX];
@@ -168,6 +170,46 @@ void Artysci::listing_danych(int k)
     }
 }
 
+void Artysci::dodaj_rekord()
+{
+    if ( licznik >= MAX )
+            {
+                cout << " Niestety, baza jest juz pelna!" << endl;
+                Sleep(1000);
+            } else {
+
+                gotoxy(34, 1);
+                cout << " Dodaj album do kolekcji ";
+                gotoxy (5, 2);
+                cout << "*************************************************************************" << endl;
+
+                gotoxy (34, 5);
+                numerNaLisciePrzebojow = licznik + 1;
+                cout << "Numer na liscie przebojow: " << numerNaLisciePrzebojow;
+
+                gotoxy (34, 7);
+                cout << "Wiek: "; cin >> wiek;
+                gotoxy (34, 9);
+                cout << "Imie artysty: "; cin >> imie;
+                gotoxy (34, 11);
+                cout << "Nazwisko artysty: "; cin >> nazwisko;
+                gotoxy (34, 13);
+                cout << "Nazwa albumu: "; cin >> singiel;
+                gotoxy (34, 15);
+                cout << "Ilosc sprzedanych plyt w 1szym tygodniu: "; cin >> ile_sprzedanych_plyt;
+                gotoxy (34, 17);
+                cout << "Cena albumu: "; cin >> cena;
+                gotoxy (34, 19);
+                cout <<  "Data urodzenia: "; cin >> dataUrodzin;
+                gotoxy (34, 21);
+                cout << "Miasto: "; cin >> miasto;
+
+                licznik++;
+                znacznik = 0;
+            }
+
+}
+
 void odczytPliku()
 {
     string linia;
@@ -243,7 +285,7 @@ void chodzenie_po_danych(int k)
 
     if (wykonawcy[rekord].numerNaLisciePrzebojow == 0)
     {
-        cout << "Brak numeru zerowego, baza nie zostala zaladowana!" << endl;
+        cout << "Baza nie zostala zaladowana!" << endl;
         znacznik = 1;
     } else {
         wykonawcy[rekord].listing_danych(k);
@@ -258,6 +300,8 @@ void chodzenie_po_danych(int k)
     cout << "2. Sprzedaz" << endl;
     gotoxy(5, 26);
     cout << "3. Podlicz dochod artysty" << endl;
+    gotoxy(52, 26);
+    cout << "9. Dokonaj modyfikacji bazy" << endl;
     gotoxy(32, 1);
     cout << "8. Menu glowne" << endl;
     cout << " > ";
@@ -294,6 +338,7 @@ void chodzenie_po_danych(int k)
         if ( (rekord >= licznik) || (rekord < 0) )
         {
             rekord = 0;
+            //rekord = licznik + 1;
         };
 
         wykonawcy[rekord].listing_danych(k);
@@ -317,6 +362,9 @@ void chodzenie_po_danych(int k)
     case '8':
         menu();
 
+    case '9':
+        modyfikacje();
+
     default:
         {
         cout << "Blad! Wybierz cyfre sposrod podanych!";
@@ -331,6 +379,51 @@ void chodzenie_po_danych(int k)
 void czyszczenie()
 {
     system("cls");
+}
+
+void modyfikacje()
+{
+    char wybor;
+    czyszczenie();
+
+    gotoxy(24, 8);
+    cout << "0. Powrot do menu glownego" << endl;
+    gotoxy(24, 10);
+    cout << "1. Dodaj pozycje do bazy" << endl;
+
+
+    gotoxy (30, 16);
+    cout << "Twoj wybor to: ";
+    gotoxy (30, 18);
+    cout << " > ";
+    cin >> wybor;
+    getchar();
+
+    switch(wybor)
+    {
+        case '0':
+            menu();
+
+        case '1':
+            {
+                czyszczenie();
+                wykonawcy[licznik].dodaj_rekord();
+                zapisDoPliku();
+                rekord++;
+                modyfikacje();
+            }
+
+
+
+        default:
+            {
+                cout << "Blad! Wybierz cyfre sposrod podanych!";
+                Sleep(1000);
+                modyfikacje();
+            }
+    }
+
+
 }
 
 void menu()
