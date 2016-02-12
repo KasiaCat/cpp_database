@@ -118,7 +118,7 @@ Sugar
 59
 18-03-1979
 Los Angeles
-13
+14
 0
 49
 Keith
@@ -128,3 +128,27 @@ Lonely
 34
 26-010-1967
 Whangarei
+15
+1
+40
+Maria
+Sadowska
+Euforia
+342
+24
+20-09-1954
+Warszawa
+16
+1
+41
+Maria
+Peszek
+Wariatka
+3532
+23
+20-10-1967
+Warszawa
+
+
+
+
