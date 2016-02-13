@@ -30,6 +30,7 @@ void menu();
 void menu_sortowania();
 void chodzenie_po_danych();
 void modyfikacje();
+void menu_wyszukiwania();
 
 class Artysci {
 public:
@@ -57,6 +58,8 @@ public:
     void edycja_albumu();
     void sortowanie_po_imieniu();
     void wyszukaj_imie();
+    void wyszukaj_singiel();
+    void wyszukaj_po_cenie();
 };
 
 Artysci wykonawcy[MAX], pom;
@@ -361,8 +364,14 @@ void Artysci::wyszukaj_imie()
     bool print_man_or_woman, ustaw;
     int i = 0;
 
-    cout << "Wpisz imie wykonawcy, ktorego chcesz wyszukac: ";
+    gotoxy(2, 2);
+    cout << "*************************************************************************" << endl;
+    gotoxy(16, 24);
+    cout << "Wpisz imie wykonawcy, ktorego chcesz wyszukac: " << endl;
+    gotoxy (17, 26);
+    cout << " > ";
     cin >> szukane_imie;
+    czyszczenie();
 
     do {
         if(szukane_imie == wykonawcy[i].imie)
@@ -375,17 +384,124 @@ void Artysci::wyszukaj_imie()
                             print_man_or_woman = false;
                         }
 
+            gotoxy(5, 13);
             wykonawcy[i].listing_danych(print_man_or_woman);
         }
         i++;
 
     } while (ustaw == false && i <= licznik );
 
-        if (false)
-            cout << "Brak artysty w bazie!";
+    if (false)
+        cout << "Brak artysty w bazie!";
 
 }
 
+
+void Artysci::wyszukaj_singiel()
+{
+    string szukany_singiel;
+    bool print_man_or_woman, ustaw;
+    int i = 0;
+
+    gotoxy(2, 2);
+    cout << "*************************************************************************" << endl;
+    gotoxy(16, 24);
+    cout << "Wpisz nazwe singla/plyty, ktory chcesz wyszukac: " << endl;
+    gotoxy (17, 26);
+    cout << " > ";
+    cin >> szukany_singiel;
+    czyszczenie();
+
+    do {
+        if(szukany_singiel == wykonawcy[i].singiel)
+        {
+            ustaw = true;
+            if (wykonawcy[i].kobieta_czy_mezczyzna == true)
+                        {
+                            print_man_or_woman = true;
+                        } else {
+                            print_man_or_woman = false;
+                        }
+
+            gotoxy(5, 13);
+            wykonawcy[i].listing_danych(print_man_or_woman);
+        }
+        i++;
+
+    } while (ustaw == false && i <= licznik );
+
+    if (false)
+        cout << "Brak artysty w bazie!";
+
+}
+
+
+void Artysci::wyszukaj_po_cenie()
+{
+    double cenaOd, cenaDo;
+    int min, max;
+    bool print_man_or_woman, ustaw;
+    int i = 0;
+
+    gotoxy(2, 2);
+    cout << "*************************************************************************" << endl;
+    gotoxy(16, 24);
+    cout << "Wpisz cene, od ktorej chcesz wyszukac albumy: " << endl;
+    gotoxy (17, 26);
+    cout << " > ";
+    cin >> cenaOd;
+
+    gotoxy(16, 28);
+    cout << "Wpisz cene, do ktorej chcesz wyszukac albumy: " << endl;
+    gotoxy (17, 30);
+    cout << " > ";
+    cin >> cenaDo;
+    czyszczenie();
+
+    do {
+        if( ( wykonawcy[i].cena >= cenaOd ) && ( wykonawcy[i].cena <= cenaDo ) )
+        {
+            ustaw = true;
+            if (wykonawcy[i].kobieta_czy_mezczyzna == true)
+                        {
+                            print_man_or_woman = true;
+                        } else {
+                            print_man_or_woman = false;
+                        }
+
+
+            gotoxy(5, 13);
+            wykonawcy[i].listing_danych(print_man_or_woman);
+            getch();
+        }
+        i++;
+        czyszczenie();
+
+        min = cenaOd;
+        max = cenaDo;
+
+        if ( wykonawcy[i].cena <= cenaDo )
+            {
+             if (wykonawcy[i].kobieta_czy_mezczyzna == true)
+                        {
+                            print_man_or_woman = true;
+                        } else {
+                            print_man_or_woman = false;
+                        }
+
+
+            gotoxy(5, 13);
+            wykonawcy[i].listing_danych(print_man_or_woman);
+            getch();
+            i++;
+            }
+
+    } while (ustaw == false && i <= licznik );
+
+    if (false)
+        cout << "Brak albumow w tej cenie w bazie!";
+
+}
 
 
 void odczytPliku()
@@ -645,13 +761,13 @@ void menu()
     gotoxy(24, 10);
     cout << "2. Metody sortowania danych" << endl;
     gotoxy(24, 13);
-    cout << "3. Wyszukiwanie po imieniu" << endl;
+    cout << "3. Metody wyszukiwania danych" << endl;
     gotoxy(24, 16);
     cout << "6. Wyjdz z programu " << endl;
 
-    gotoxy (32, 18);
-    cout << "Twoj wybor to: ";
     gotoxy (32, 20);
+    cout << "Twoj wybor to: ";
+    gotoxy (32, 22);
     cout << " > ";
     cin >> wybor;
     getchar();
@@ -739,17 +855,17 @@ void menu()
 
         case '3':
             czyszczenie();
-            wykonawcy[rekord].wyszukaj_imie();
+            menu_wyszukiwania();
 
         case '6':
-            gotoxy(30, 21);
+            gotoxy(0, 24);
             zapisDoPliku();
             koniec();
         break;
 
         default:
             {
-                gotoxy(30, 18);
+                gotoxy(30, 20);
                 cout<< "Wybierz jeszcze raz!" << endl;
                 Sleep(1000);
                 menu();
@@ -758,6 +874,70 @@ void menu()
     }
 
 }
+
+void menu_wyszukiwania()
+{
+    char wybor;
+    czyszczenie();
+
+    gotoxy(23, 2);
+    cout << "Wybierz metode wyszukiwania" << endl;
+    gotoxy(3, 3);
+    cout << "*************************************************************************" << endl;
+    gotoxy(22, 6);
+    cout << "1. Wyszukaj wedlug imienia" << endl;
+    gotoxy(22, 9);
+    cout << "2. Wyszukaj wedlug singla/nazwy plyty" << endl;
+    gotoxy(22, 12);
+    cout << "3. Wyszukaj wedlug ceny albumu" << endl;
+    gotoxy(22, 15);
+    cout << "4. Wroc do menu glownego" << endl;
+
+    gotoxy (32, 19);
+    cout << "Twoj wybor to: ";
+    gotoxy (32, 21);
+    cout << " > ";
+    cin >> wybor;
+    getchar();
+
+    switch(wybor)
+    {
+        case '1':
+                czyszczenie();
+                wykonawcy[rekord].wyszukaj_imie();
+
+                getchar();
+                getchar();
+                menu_wyszukiwania();
+
+        case '2':
+                czyszczenie();
+                wykonawcy[rekord].wyszukaj_singiel();
+                getchar();
+                getchar();
+                menu_wyszukiwania();
+
+        case '3':
+                czyszczenie();
+                wykonawcy[rekord].wyszukaj_po_cenie();
+                getchar();
+                getchar();
+                menu_wyszukiwania();
+
+        case '4':
+            menu();
+
+        default:
+            {
+                gotoxy(30, 19);
+                cout<< "Wybierz jeszcze raz!" << endl;
+                Sleep(1000);
+                menu_wyszukiwania();
+
+            }
+    }
+}
+
 
 void menu_sortowania()
 {
@@ -770,20 +950,20 @@ void menu_sortowania()
     cout << "*************************************************************************" << endl;
     gotoxy(22, 5);
     cout << "1. Posortuj rosnaco wedlug ceny" << endl;
-    gotoxy(22, 7);
+    gotoxy(22, 8);
     cout << "2. Posortuj rosnaco wedlug singla" << endl;
-    gotoxy(22, 9);
-    cout << "3. Posortuj rosnaco wedlug ilosci sprzedanych plyt" << endl;
     gotoxy(22, 11);
+    cout << "3. Posortuj rosnaco wedlug ilosci sprzedanych plyt" << endl;
+    gotoxy(22, 14);
     cout << "4. Posortuj rosnaca wedlug wieku" << endl;
-    gotoxy(22, 13);
+    gotoxy(22, 17);
     cout << "5. Posortuj rosnaca wedlug imienia" << endl;
-    gotoxy(22, 15);
+    gotoxy(22, 20);
     cout << "6. Wroc do menu glownego" << endl;
 
-    gotoxy (32, 21);
+    gotoxy (32, 24);
     cout << "Twoj wybor to: ";
-    gotoxy (32, 23);
+    gotoxy (32, 26);
     cout << " > ";
     cin >> wybor;
     getchar();
@@ -855,7 +1035,7 @@ void menu_sortowania()
 
         default:
             {
-                gotoxy(30, 18);
+                gotoxy(30, 24);
                 cout<< "Wybierz jeszcze raz!" << endl;
                 Sleep(1000);
                 menu_sortowania();
@@ -872,8 +1052,7 @@ void start()
 
 void koniec()
 {
-    gotoxy(20, 23);
-    cout << "Nacisnij Enter by zamknac baze danych" << endl;
+    gotoxy(20, 26);
     exit(0);
     cin.ignore();
     cin.get();
