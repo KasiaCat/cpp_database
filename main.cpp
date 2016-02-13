@@ -61,6 +61,8 @@ public:
     void wyszukaj_singiel();
     void wyszukaj_po_cenie();
     int ile_plyt_kupic( unsigned long int d );
+    int usuwanie_wielu(int pierwszy, int drugi, int trzeci);
+    void usun_wiele();
 };
 
 Artysci wykonawcy[MAX], pom;
@@ -353,6 +355,52 @@ void Artysci::usun()
     cout << usuwanie_rekordu(ktory);
 }
 
+int Artysci::usuwanie_wielu(int jeden, int dwa, int trzy)
+{
+    int i, j;
+    for (i = 0; i < licznik; i++)
+    {
+        if ( ( wykonawcy[i].numerNaLisciePrzebojow == jeden ) || ( wykonawcy[i].numerNaLisciePrzebojow == dwa )
+            || ( wykonawcy[i].numerNaLisciePrzebojow == trzy ))
+                {
+
+                    for (j = i + 1; j < licznik; j++)
+                    {
+                        wykonawcy[j - 1] = wykonawcy[j];
+                        wykonawcy[j] = wykonawcy[j + 1];
+                        wykonawcy[j + 1] = wykonawcy[j + 2];
+
+                    }
+                        j++;
+                        --licznik;
+                }
+
+    }
+    return 0;
+}
+
+
+void Artysci::usun_wiele()
+{
+    int pierwszy, drugi, trzeci;
+    gotoxy(15, 13);
+    cout << "Ktore 3 elementy usunac(wybierz numer na liscie przebojow): " << endl;
+    gotoxy(15, 15);
+    cout << " > ";
+    cin >> pierwszy;
+    getchar();
+    gotoxy(15, 16);
+    cout << " > ";
+    cin >> drugi;
+    getchar();
+    gotoxy(15, 17);
+    cout << " > ";
+    cin >> trzeci;
+    getchar();
+
+    cout << usuwanie_wielu(pierwszy, drugi, trzeci);
+}
+
 
 void Artysci::wyszukaj_imie()
 {
@@ -372,7 +420,7 @@ void Artysci::wyszukaj_imie()
     do {
         if(szukane_imie == wykonawcy[i].imie)
         {
-            ustaw = true;
+            ustaw = 1;
             if (wykonawcy[i].kobieta_czy_mezczyzna == true)
                         {
                             print_man_or_woman = true;
@@ -385,9 +433,9 @@ void Artysci::wyszukaj_imie()
         }
         i++;
 
-    } while (ustaw == false && i <= licznik );
+    } while (ustaw !=1 && i <= licznik );
 
-    if (true)
+    if (i > licznik)
         cout << "Brak artysty w bazie!";
 
 }
@@ -411,7 +459,7 @@ void Artysci::wyszukaj_singiel()
     do {
         if(szukany_singiel == wykonawcy[i].singiel)
         {
-            ustaw = true;
+            ustaw = 1;
             if (wykonawcy[i].kobieta_czy_mezczyzna == true)
                         {
                             print_man_or_woman = true;
@@ -424,9 +472,9 @@ void Artysci::wyszukaj_singiel()
         }
         i++;
 
-    } while (ustaw == false && i <= licznik );
+    } while (ustaw !=1 && i <= licznik );
 
-    if (true)
+    if (i > licznik)
         cout << "Brak artysty w bazie!";
 
 }
@@ -457,7 +505,7 @@ void Artysci::wyszukaj_po_cenie()
     do {
         if( ( wykonawcy[i].cena >= cenaOd ) && ( wykonawcy[i].cena <= cenaDo ) )
         {
-            ustaw = true;
+            ustaw = 1;
             if (wykonawcy[i].kobieta_czy_mezczyzna == true)
                         {
                             print_man_or_woman = true;
@@ -472,6 +520,7 @@ void Artysci::wyszukaj_po_cenie()
         }
         i++;
         czyszczenie();
+
 
         min = cenaOd;
         max = cenaDo;
@@ -492,10 +541,10 @@ void Artysci::wyszukaj_po_cenie()
             i++;
             }
 
-    } while (ustaw == false && i <= licznik );
+    } while (ustaw != 1 && i <= licznik );
 
-    if (true)
-        cout << "Brak albumow w tej cenie w bazie!";
+    if (i > licznik)
+        cout << "Brak artysty w bazie!";
 
 }
 
@@ -634,8 +683,7 @@ void chodzenie_po_danych(int k)
         {
             rekord = 0;
             //rekord = licznik + 1;
-        };
-
+        }
         wykonawcy[rekord].listing_danych(k);
         chodzenie_po_danych(k);
 
@@ -655,7 +703,7 @@ void chodzenie_po_danych(int k)
         if ( (rekord >= licznik) || (rekord < 0) )
         {
             rekord = licznik - 1;
-        };
+        }
         wykonawcy[rekord].listing_danych(k);
         chodzenie_po_danych(k);
 
@@ -688,17 +736,37 @@ void modyfikacje()
     char wybor;
     czyszczenie();
 
+        gotoxy(15, 4); cout << "|"; gotoxy(15, 5); cout << "|"; gotoxy(15, 6); cout << "|";
+        gotoxy(15, 7); cout << "|"; gotoxy(15, 8); cout << "|"; gotoxy(15, 9); cout << "|";
+        gotoxy(15, 10); cout << "|"; gotoxy(15, 11); cout << "|";
+        gotoxy(15, 12); cout << "|"; gotoxy(15, 13); cout << "|"; gotoxy(15, 14); cout << "|";
+        gotoxy(15, 15); cout << "|"; gotoxy(15, 16); cout << "|"; gotoxy(15, 17); cout << "|";
+        gotoxy(15, 18); cout << "|"; gotoxy(15, 19); cout << "|"; gotoxy(15, 20); cout << "|";
+
+        gotoxy(59, 4); cout << "|"; gotoxy(59, 5); cout << "|"; gotoxy(59, 6); cout << "|";
+        gotoxy(59, 7); cout << "|"; gotoxy(59, 8); cout << "|"; gotoxy(59, 9); cout << "|";
+        gotoxy(59, 10); cout << "|"; gotoxy(59, 11); cout << "|"; gotoxy(59, 12); cout << "|";
+        gotoxy(59, 13); cout << "|"; gotoxy(59, 14); cout << "|"; gotoxy(59, 15); cout << "|";
+        gotoxy(59, 16); cout << "|"; gotoxy(59, 17); cout << "|"; gotoxy(59, 18); cout << "|";
+        gotoxy(59, 19); cout << "|"; gotoxy(59, 20); cout << "|";
+
+    gotoxy(15, 4);
+    cout << "---------------------------------------------";
     gotoxy(24, 8);
     cout << "0. Powrot do menu glownego" << endl;
-    gotoxy(24, 10);
+    gotoxy(24, 11);
     cout << "1. Dodaj pozycje do bazy" << endl;
-    gotoxy(24, 12);
-    cout << "2. Usun pozycje do bazy" << endl;
+    gotoxy(24, 14);
+    cout << "2. Usun pozycje z bazy" << endl;
+    gotoxy(24, 17);
+    cout << "3. Usun 3 pozycje z bazy" << endl;
+    gotoxy(15, 20);
+    cout << "---------------------------------------------";
 
 
-    gotoxy (30, 18);
+    gotoxy (30, 23);
     cout << "Twoj wybor to: ";
-    gotoxy (30, 20);
+    gotoxy (30, 25);
     cout << " > ";
     cin >> wybor;
     getchar();
@@ -731,8 +799,22 @@ void modyfikacje()
 
             }
 
+        case '3':
+            {
+                czyszczenie();
+                wykonawcy[licznik].usun_wiele();
+                gotoxy(26, 27);
+                zapisDoPliku();
+                rekord++;
+                Sleep(1000);
+                modyfikacje();
+
+            }
+
+
         default:
             {
+                gotoxy(30, 23);
                 cout << "Blad! Wybierz cyfre sposrod podanych!";
                 Sleep(1000);
                 modyfikacje();
@@ -774,55 +856,39 @@ void menu()
             {
             czyszczenie();
 
-            gotoxy(19, 2);
-            cout << "|";
-            gotoxy(19, 3);
-            cout << "|";
-            gotoxy(19, 4);
-            cout << "|";
-            gotoxy(19, 14);
-            cout << "|";
-            gotoxy(19, 15);
-            cout << "|";
-            gotoxy(19, 16);
-            cout << "|";
+            gotoxy(15, 1); cout << "|"; gotoxy(15, 2); cout << "|"; gotoxy(15, 3); cout << "|";
+            gotoxy(15, 4); cout << "|"; gotoxy(15, 5); cout << "|"; gotoxy(15, 6); cout << "|";
+            gotoxy(15, 15); cout << "|"; gotoxy(15, 16); cout << "|"; gotoxy(15, 17); cout << "|";
+            gotoxy(15, 18); cout << "|"; gotoxy(15, 19); cout << "|"; gotoxy(15, 20); cout << "|";
 
-            gotoxy(60, 2);
-            cout << "|";
-            gotoxy(60, 3);
-            cout << "|";
-            gotoxy(60, 4);
-            cout << "|";
-            gotoxy(60, 14);
-            cout << "|";
-            gotoxy(60, 15);
-            cout << "|";
-            gotoxy(60, 16);
-            cout << "|";
+            gotoxy(59, 1); cout << "|"; gotoxy(59, 2); cout << "|"; gotoxy(59, 3); cout << "|";
+            gotoxy(59, 4); cout << "|"; gotoxy(59, 5); cout << "|"; gotoxy(59, 6); cout << "|";
+            gotoxy(59, 15); cout << "|"; gotoxy(59, 16); cout << "|"; gotoxy(59, 17); cout << "|";
+            gotoxy(59, 18); cout << "|"; gotoxy(59, 19); cout << "|"; gotoxy(59, 20); cout << "|";
 
-            gotoxy(20, 2);
-            cout << "----------------------------------------";
+            gotoxy(15, 1);
+            cout << "---------------------------------------------";
             gotoxy(22, 3);
             cout << "Wyswietlic artystki czy artystow ? ";
-            gotoxy(20, 4);
-            cout << "----------------------------------------";
+            gotoxy(15, 6);
+            cout << "---------------------------------------------";
 
-            gotoxy(22, 7);
-            cout << "Wybierz 1, by wyswietlic arystki, ";
-            gotoxy(22, 10);
-            cout <<"Wybierz 0, by wyswietlic arystow.";
+            gotoxy(28, 9);
+            cout <<"1. Wyswietl arystki";
+            gotoxy(28, 12);
+            cout <<"0. Wyswietl arystow";
 
 
-            gotoxy(20, 14);
-            cout << "----------------------------------------";
-            gotoxy(22, 15);
+            gotoxy(15, 15);
+            cout << "---------------------------------------------";
+            gotoxy(22, 18);
             cout << "wcisnij 8, by powrocic do menu";
-            gotoxy(20, 16);
-            cout << "----------------------------------------";
+            gotoxy(15, 20);
+            cout << "---------------------------------------------";
 
             do {
 
-            gotoxy(22, 22);
+            gotoxy(22, 25);
             cout <<" > ";
             cin >> deal;
             getchar();
@@ -835,8 +901,9 @@ void menu()
                 menu();
 
             else {
-                gotoxy(22, 18);
+                gotoxy(16, 23);
                 cout << "Wybierz 1 lub 0!" << endl;
+                Sleep(1000);
             }
 
             } while ( deal >=2 );
