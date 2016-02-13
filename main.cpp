@@ -56,6 +56,7 @@ public:
     void usun();
     void edycja_albumu();
     void sortowanie_po_imieniu();
+    void wyszukaj_imie();
 };
 
 Artysci wykonawcy[MAX], pom;
@@ -354,6 +355,39 @@ void Artysci::usun()
 }
 
 
+void Artysci::wyszukaj_imie()
+{
+    string szukane_imie;
+    bool print_man_or_woman, ustaw;
+    int i = 0;
+
+    cout << "Wpisz imie wykonawcy, ktorego chcesz wyszukac: ";
+    cin >> szukane_imie;
+
+    do {
+        if(szukane_imie == wykonawcy[i].imie)
+        {
+            ustaw = true;
+            if (wykonawcy[i].kobieta_czy_mezczyzna == true)
+                        {
+                            print_man_or_woman = true;
+                        } else {
+                            print_man_or_woman = false;
+                        }
+
+            wykonawcy[i].listing_danych(print_man_or_woman);
+        }
+        i++;
+
+    } while (ustaw == false && i <= licznik );
+
+        if (false)
+            cout << "Brak artysty w bazie!";
+
+}
+
+
+
 void odczytPliku()
 {
     string linia;
@@ -611,11 +645,13 @@ void menu()
     gotoxy(24, 10);
     cout << "2. Metody sortowania danych" << endl;
     gotoxy(24, 13);
+    cout << "3. Wyszukiwanie po imieniu" << endl;
+    gotoxy(24, 16);
     cout << "6. Wyjdz z programu " << endl;
 
-    gotoxy (32, 19);
+    gotoxy (32, 18);
     cout << "Twoj wybor to: ";
-    gotoxy (32, 21);
+    gotoxy (32, 20);
     cout << " > ";
     cin >> wybor;
     getchar();
@@ -700,6 +736,10 @@ void menu()
 
         case '2':
             menu_sortowania();
+
+        case '3':
+            czyszczenie();
+            wykonawcy[rekord].wyszukaj_imie();
 
         case '6':
             gotoxy(30, 21);
