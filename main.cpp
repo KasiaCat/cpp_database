@@ -27,6 +27,7 @@ void odczytPliku();
 void zapisDoPliku();
 void czyszczenie();
 void menu();
+void menu_sortowania();
 void chodzenie_po_danych();
 void modyfikacje();
 
@@ -48,14 +49,16 @@ public:
     void sortowanie_cenowe_rosnace();
     void sortowanie_rosnace_po_singlu();
     void sortowanie_po_ilosci_plyt();
+    void sortowanie_po_wieku();
     void dodaj_rekord();
     void usuwanie_rekordu();
     int usuwanie_rekordu(int do_usuniecia);
     void usun();
     void edycja_albumu();
+    void sortowanie_po_imieniu();
 };
 
-Artysci wykonawcy[MAX];
+Artysci wykonawcy[MAX], pom;
 
 int ile_plyt_kupic( unsigned long int d )
 {
@@ -124,7 +127,7 @@ void Artysci::sortowanie_po_ilosci_plyt()
       }
 
 }
-
+/*
 void Artysci::sortowanie_rosnace_po_singlu()
 {
     for (int nr = 2; nr <= licznik; nr++)
@@ -139,6 +142,70 @@ void Artysci::sortowanie_rosnace_po_singlu()
             }
           wykonawcy[previous + 1] = wykonawcy[0];
       }
+
+}
+*/
+
+
+void Artysci::sortowanie_rosnace_po_singlu()
+{
+    bool znacznik;;
+    int i;
+    int nr = 1;
+        do {
+            znacznik = false;
+            for (i = 1; i <= licznik - nr; i++)
+                if ( wykonawcy[i].singiel > wykonawcy[i + 1].singiel )
+                    {
+                        pom = wykonawcy[i];
+                        wykonawcy[i] = wykonawcy[i + 1];
+                        wykonawcy[i + 1] = pom;
+                        znacznik = true;
+                    }
+                nr++;
+        } while (znacznik);
+}
+
+
+
+
+void Artysci::sortowanie_po_wieku()
+{
+    bool znacznik;;
+    int i;
+    int nr = 1;
+        do {
+            znacznik = false;
+            for (i = 1; i <= licznik - nr; i++)
+                if ( wykonawcy[i].wiek > wykonawcy[i + 1].wiek )
+                    {
+                        pom = wykonawcy[i];
+                        wykonawcy[i] = wykonawcy[i + 1];
+                        wykonawcy[i + 1] = pom;
+                        znacznik = true;
+                    }
+                nr++;
+        } while (znacznik);
+
+}
+
+void Artysci::sortowanie_po_imieniu()
+{
+    bool znacznik;;
+    int i;
+    int nr = 1;
+        do {
+            znacznik = false;
+            for (i = 1; i <= licznik - nr; i++)
+                if ( wykonawcy[i].imie > wykonawcy[i + 1].imie )
+                    {
+                        pom = wykonawcy[i];
+                        wykonawcy[i] = wykonawcy[i + 1];
+                        wykonawcy[i + 1] = pom;
+                        znacznik = true;
+                    }
+                nr++;
+        } while (znacznik);
 
 }
 
@@ -539,16 +606,12 @@ void menu()
     cout << "Baza plyt wydanych w latach 2000-2015" << endl;
     gotoxy(3, 3);
     cout << "*************************************************************************" << endl;
-    gotoxy(22, 7);
+    gotoxy(24, 7);
     cout << "1. Spis plyt - wyswietlanie " << endl;
-    gotoxy(22, 9);
-    cout << "2. Posortuj rosnaco wedlug ceny" << endl;
-    gotoxy(22, 11);
-    cout << "3. Posortuj rosnaco wedlug singla" << endl;
-    gotoxy(22, 13);
-    cout << "4. Posortuj rosnaco wedlug ilosci sprzedanych plyt" << endl;
-    gotoxy(22, 15);
-    cout << "5. Wyjdz z programu " << endl;
+    gotoxy(24, 10);
+    cout << "2. Metody sortowania danych" << endl;
+    gotoxy(24, 13);
+    cout << "6. Wyjdz z programu " << endl;
 
     gotoxy (32, 19);
     cout << "Twoj wybor to: ";
@@ -636,42 +699,9 @@ void menu()
         break;
 
         case '2':
-                czyszczenie();
-                gotoxy(22, 9);
-                cout << "By posortowac wszystkich artystow i artystki ";
-                gotoxy(22, 10);
-                cout << "wedlug ceny albumu, wcisnij enter" << endl;
-                gotoxy(22, 11);
-                getchar();
+            menu_sortowania();
 
-                    wykonawcy[rekord].sortowanie_cenowe_rosnace();
-                    menu();
-
-        case '3':
-                czyszczenie();
-                gotoxy(22, 9);
-                cout << "By posortowac wszystkich artystow i artystki ";
-                gotoxy(22, 10);
-                cout << "wedlug nazwy singla, wcisnij enter" << endl;
-                gotoxy(22, 11);
-                getchar();
-
-                    wykonawcy[rekord].sortowanie_rosnace_po_singlu();
-                    menu();
-
-        case '4':
-                czyszczenie();
-                gotoxy(22, 9);
-                cout << "By posortowac wszystkich artystow i artystki ";
-                gotoxy(22, 10);
-                cout << "wedlug ilosci sprzedanych krazkow, wcisnij enter" << endl;
-                gotoxy(22, 11);
-                getchar();
-
-                    wykonawcy[rekord].sortowanie_po_ilosci_plyt();
-                    menu();
-
-        case '5':
+        case '6':
             gotoxy(30, 21);
             zapisDoPliku();
             koniec();
@@ -687,6 +717,111 @@ void menu()
             }
     }
 
+}
+
+void menu_sortowania()
+{
+    char wybor;
+    czyszczenie();
+
+    gotoxy(25, 2);
+    cout << "Wybierz metode sortowania" << endl;
+    gotoxy(3, 3);
+    cout << "*************************************************************************" << endl;
+    gotoxy(22, 5);
+    cout << "1. Posortuj rosnaco wedlug ceny" << endl;
+    gotoxy(22, 7);
+    cout << "2. Posortuj rosnaco wedlug singla" << endl;
+    gotoxy(22, 9);
+    cout << "3. Posortuj rosnaco wedlug ilosci sprzedanych plyt" << endl;
+    gotoxy(22, 11);
+    cout << "4. Posortuj rosnaca wedlug wieku" << endl;
+    gotoxy(22, 13);
+    cout << "5. Posortuj rosnaca wedlug imienia" << endl;
+    gotoxy(22, 15);
+    cout << "6. Wroc do menu glownego" << endl;
+
+    gotoxy (32, 21);
+    cout << "Twoj wybor to: ";
+    gotoxy (32, 23);
+    cout << " > ";
+    cin >> wybor;
+    getchar();
+
+    switch(wybor)
+    {
+        case '1':
+                czyszczenie();
+                gotoxy(22, 9);
+                cout << "By posortowac wszystkich artystow i artystki ";
+                gotoxy(22, 10);
+                cout << "wedlug ceny albumu, wcisnij enter" << endl;
+                gotoxy(22, 11);
+                getchar();
+
+                    wykonawcy[rekord].sortowanie_cenowe_rosnace();
+                    menu();
+
+        case '2':
+                czyszczenie();
+                gotoxy(22, 9);
+                cout << "By posortowac wszystkich artystow i artystki ";
+                gotoxy(22, 10);
+                cout << "wedlug nazwy singla, wcisnij enter" << endl;
+                gotoxy(22, 11);
+                getchar();
+
+                    wykonawcy[rekord].sortowanie_rosnace_po_singlu();
+                    menu();
+
+        case '3':
+                czyszczenie();
+                gotoxy(22, 9);
+                cout << "By posortowac wszystkich artystow i artystki ";
+                gotoxy(22, 10);
+                cout << "wedlug ilosci sprzedanych krazkow, wcisnij enter" << endl;
+                gotoxy(22, 11);
+                getchar();
+
+                    wykonawcy[rekord].sortowanie_po_ilosci_plyt();
+                    menu();
+
+        case '4':
+                czyszczenie();
+                gotoxy(22, 9);
+                cout << "By posortowac wszystkich artystow i artystki ";
+                gotoxy(22, 10);
+                cout << "wedlug wieku, wcisnij enter" << endl;
+                gotoxy(22, 11);
+                getchar();
+
+                    wykonawcy[rekord].sortowanie_po_wieku();
+                    menu();
+
+        case '5':
+                czyszczenie();
+                gotoxy(22, 9);
+                cout << "By posortowac wszystkich artystow i artystki ";
+                gotoxy(22, 10);
+                cout << "wedlug imienia, wcisnij enter" << endl;
+                gotoxy(22, 11);
+                getchar();
+
+                    wykonawcy[rekord].sortowanie_po_imieniu();
+                    menu();
+
+        case '6':
+            menu();
+
+        default:
+            {
+                gotoxy(30, 18);
+                cout<< "Wybierz jeszcze raz!" << endl;
+                Sleep(1000);
+                menu_sortowania();
+
+            }
+    }
 }
 
 void start()
