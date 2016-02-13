@@ -391,7 +391,7 @@ void Artysci::wyszukaj_imie()
 
     } while (ustaw == false && i <= licznik );
 
-    if (false)
+    if (true)
         cout << "Brak artysty w bazie!";
 
 }
@@ -430,7 +430,7 @@ void Artysci::wyszukaj_singiel()
 
     } while (ustaw == false && i <= licznik );
 
-    if (false)
+    if (true)
         cout << "Brak artysty w bazie!";
 
 }
@@ -498,7 +498,7 @@ void Artysci::wyszukaj_po_cenie()
 
     } while (ustaw == false && i <= licznik );
 
-    if (false)
+    if (true)
         cout << "Brak albumow w tej cenie w bazie!";
 
 }
