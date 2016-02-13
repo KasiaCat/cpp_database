@@ -60,11 +60,12 @@ public:
     void wyszukaj_imie();
     void wyszukaj_singiel();
     void wyszukaj_po_cenie();
+    int ile_plyt_kupic( unsigned long int d );
 };
 
 Artysci wykonawcy[MAX], pom;
 
-int ile_plyt_kupic( unsigned long int d )
+int Artysci::ile_plyt_kupic( unsigned long int d )
 {
     unsigned long int suma = 0;
 
@@ -83,18 +84,13 @@ void Artysci::kupno()
     cout << "Rachunek wynosi:  " << ile_plyt_kupic(ile) << "$";
 }
 
-int zarobki_artysty()
+void Artysci::zarobki()
 {
     unsigned long long int suma = 0;
 
     suma =  wykonawcy[rekord].ile_sprzedanych_plyt * wykonawcy[rekord].cena;
 
-    return suma;
-}
-
-void Artysci::zarobki()
-{
-    cout << "Dochod artysty: " << zarobki_artysty() << "$";
+    cout << "Dochod artysty: " << suma << "$";
 }
 
 void Artysci::sortowanie_cenowe_rosnace()
