@@ -134,25 +134,6 @@ void Artysci::sortowanie_po_ilosci_plyt()
       }
 
 }
-/*
-void Artysci::sortowanie_rosnace_po_singlu()
-{
-    for (int nr = 2; nr <= licznik; nr++)
-      {
-          wykonawcy[0] = wykonawcy[nr];
-          int previous = nr - 1;
-
-          while ( wykonawcy[previous].singiel > wykonawcy[0].singiel )
-            {
-              wykonawcy[previous + 1] = wykonawcy[previous];
-              previous--;
-            }
-          wykonawcy[previous + 1] = wykonawcy[0];
-      }
-
-}
-*/
-
 
 void Artysci::sortowanie_rosnace_po_singlu()
 {
@@ -330,7 +311,6 @@ void Artysci::dodaj_rekord()
 
                 gotoxy(48, 7);
                 cin >> kobieta_czy_mezczyzna;
-
                 gotoxy (26, 11);
                 cout << "Wiek: "; cin >> wiek;
                 gotoxy (26, 13);
@@ -356,7 +336,7 @@ void Artysci::dodaj_rekord()
 
 void Artysci::edycja_albumu()
 {
-        char edit;
+        int wybor;
 
         gotoxy (5, 3);
         cout << "*************************************************************************" << endl;
@@ -379,12 +359,80 @@ void Artysci::edycja_albumu()
         gotoxy (5, 21);
         cout << "Miasto: " << miasto << endl;
 
-        gotoxy(48, 1);
-        cout << "Edytowac numer [1/0]: "; cin >> edit;
-                if ( edit == '1' )
+        gotoxy(26, 1);
+        cout << "Edytuj wiek [1 - edytuj, 0 - nie]: "; wybor = getch();
+                if ( wybor == 1 )
                    {
-                        gotoxy( 32, 5 );
-                        cin >> numerNaLisciePrzebojow;
+                        gotoxy( 20, 7 );
+                        cout << " > ";
+                        cin >> wiek;
+
+                   }
+        gotoxy(26, 1);
+        cout << "Edytuj imie [1 - edytuj, 0 - nie]: "; wybor = getch();
+                if ( wybor == 1 )
+                   {
+                        gotoxy( 28, 9 );
+                        cout << " > ";
+                        cin >> imie;
+
+                   }
+        gotoxy(26, 1);
+        cout << "Edytuj nazwisko [1 - edytuj, 0 - nie]: "; wybor = getch();
+                if ( wybor == 1 )
+                   {
+                        gotoxy( 26, 11 );
+                        cout << " > ";
+                        cin >> nazwisko;
+
+                   }
+        gotoxy(26, 1);
+        cout << "Edytuj singiel [1 - edytuj, 0 - nie]: "; wybor = getch();
+                if ( wybor == 1 )
+                   {
+                        gotoxy( 26, 13 );
+                        cout << " > ";
+                        cin >> singiel;
+
+                   }
+
+        gotoxy(26, 1);
+        cout << "Edytuj ilosc plyt [1 - edytuj, 0 - nie]: "; wybor = getch();
+                if ( wybor == 1 )
+                   {
+                        gotoxy( 49, 15 );
+                        cout << " > ";
+                        cin >> ile_sprzedanych_plyt;
+
+                   }
+
+        gotoxy(26, 1);
+        cout << "Edytuj cene [1 - edytuj, 0 - nie]:        "; wybor = getch();
+                if ( wybor == 1 )
+                   {
+                        gotoxy( 30, 17 );
+                        cout << " > ";
+                        cin >> cena;
+
+                   }
+
+        gotoxy(26, 1);
+        cout << "Edytuj date urodzenia [1 - edytuj, 0 - nie]: "; wybor = getch();
+                if ( wybor == 1 )
+                   {
+                        gotoxy( 36, 19 );
+                        cout << " > ";
+                        cin >> dataUrodzin;
+
+                   }
+
+        gotoxy(26, 1);
+        cout << "Edytuj nazwe miasta [1 - edytuj, 0 - nie]: "; wybor = getch();
+                if ( wybor == 1 )
+                   {
+                        gotoxy( 36, 21 );
+                        cout << " > ";
+                        cin >> miasto;
 
                    }
 
@@ -782,7 +830,8 @@ void chodzenie_po_danych(int k)
 
     case '5':
         {
-        wykonawcy[licznik].edycja_albumu();
+        czyszczenie();
+        wykonawcy[rekord].edycja_albumu();
         chodzenie_po_danych(k);
         }
         break;
