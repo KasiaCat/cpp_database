@@ -360,7 +360,7 @@ void Artysci::edycja_albumu()
         cout << "Miasto: " << miasto << endl;
 
         gotoxy(26, 1);
-        cout << "Edytuj wiek [1 - edytuj, 0 - nie]: "; wybor = getch();
+        cout << "Edytuj wiek [1 - edytuj, 0 - nie]: "; /*wybor = getch();*/ cin >> wybor;
                 if ( wybor == 1 )
                    {
                         gotoxy( 20, 7 );
@@ -369,7 +369,7 @@ void Artysci::edycja_albumu()
 
                    }
         gotoxy(26, 1);
-        cout << "Edytuj imie [1 - edytuj, 0 - nie]: "; wybor = getch();
+        cout << "Edytuj imie [1 - edytuj, 0 - nie]: "; cin >> wybor;
                 if ( wybor == 1 )
                    {
                         gotoxy( 28, 9 );
@@ -378,7 +378,7 @@ void Artysci::edycja_albumu()
 
                    }
         gotoxy(26, 1);
-        cout << "Edytuj nazwisko [1 - edytuj, 0 - nie]: "; wybor = getch();
+        cout << "Edytuj nazwisko [1 - edytuj, 0 - nie]: "; cin >> wybor;
                 if ( wybor == 1 )
                    {
                         gotoxy( 26, 11 );
@@ -387,7 +387,7 @@ void Artysci::edycja_albumu()
 
                    }
         gotoxy(26, 1);
-        cout << "Edytuj singiel [1 - edytuj, 0 - nie]: "; wybor = getch();
+        cout << "Edytuj singiel [1 - edytuj, 0 - nie]: "; cin >> wybor;
                 if ( wybor == 1 )
                    {
                         gotoxy( 26, 13 );
@@ -397,7 +397,7 @@ void Artysci::edycja_albumu()
                    }
 
         gotoxy(26, 1);
-        cout << "Edytuj ilosc plyt [1 - edytuj, 0 - nie]: "; wybor = getch();
+        cout << "Edytuj ilosc plyt [1 - edytuj, 0 - nie]:   "; cin >> wybor;
                 if ( wybor == 1 )
                    {
                         gotoxy( 49, 15 );
@@ -407,7 +407,7 @@ void Artysci::edycja_albumu()
                    }
 
         gotoxy(26, 1);
-        cout << "Edytuj cene [1 - edytuj, 0 - nie]:        "; wybor = getch();
+        cout << "Edytuj cene [1 - edytuj, 0 - nie]:        "; cin >> wybor;
                 if ( wybor == 1 )
                    {
                         gotoxy( 30, 17 );
@@ -417,7 +417,7 @@ void Artysci::edycja_albumu()
                    }
 
         gotoxy(26, 1);
-        cout << "Edytuj date urodzenia [1 - edytuj, 0 - nie]: "; wybor = getch();
+        cout << "Edytuj date urodzenia [1 - edytuj, 0 - nie]:     "; cin >> wybor;
                 if ( wybor == 1 )
                    {
                         gotoxy( 36, 19 );
@@ -427,7 +427,7 @@ void Artysci::edycja_albumu()
                    }
 
         gotoxy(26, 1);
-        cout << "Edytuj nazwe miasta [1 - edytuj, 0 - nie]: "; wybor = getch();
+        cout << "Edytuj nazwe miasta [1 - edytuj, 0 - nie]:    "; cin >> wybor;
                 if ( wybor == 1 )
                    {
                         gotoxy( 36, 21 );
@@ -1021,26 +1021,26 @@ void Menu_woman_or_man()
     int deal;
     czyszczenie();
 
-    gotoxy(15, 1); cout << "|"; gotoxy(15, 2); cout << "|"; gotoxy(15, 3); cout << "|";
-    gotoxy(15, 4); cout << "|"; gotoxy(15, 5); cout << "|"; gotoxy(15, 6); cout << "|";
+    gotoxy(15, 3); cout << "|"; gotoxy(15, 4); cout << "|"; gotoxy(15, 5); cout << "|";
+    gotoxy(15, 6); cout << "|"; gotoxy(15, 7); cout << "|"; gotoxy(15, 8); cout << "|";
     gotoxy(15, 15); cout << "|"; gotoxy(15, 16); cout << "|"; gotoxy(15, 17); cout << "|";
     gotoxy(15, 18); cout << "|"; gotoxy(15, 19); cout << "|"; gotoxy(15, 20); cout << "|";
 
-    gotoxy(59, 1); cout << "|"; gotoxy(59, 2); cout << "|"; gotoxy(59, 3); cout << "|";
-    gotoxy(59, 4); cout << "|"; gotoxy(59, 5); cout << "|"; gotoxy(59, 6); cout << "|";
+    gotoxy(59, 3); cout << "|"; gotoxy(59, 4); cout << "|"; gotoxy(59, 5); cout << "|";
+    gotoxy(59, 6); cout << "|"; gotoxy(59, 7); cout << "|"; gotoxy(59, 8); cout << "|";
     gotoxy(59, 15); cout << "|"; gotoxy(59, 16); cout << "|"; gotoxy(59, 17); cout << "|";
     gotoxy(59, 18); cout << "|"; gotoxy(59, 19); cout << "|"; gotoxy(59, 20); cout << "|";
 
-    gotoxy(15, 1);
+    gotoxy(15, 3);
     cout << "---------------------------------------------";
-    gotoxy(20, 3);
+    gotoxy(20, 5);
     cout << "Wyswietlic artystki czy artystow ? ";
-    gotoxy(15, 6);
+    gotoxy(15, 8);
     cout << "---------------------------------------------";
 
-    gotoxy(28, 9);
+    gotoxy(28, 11);
     cout <<"0. Wyswietl arystow";
-    gotoxy(28, 12);
+    gotoxy(28, 13);
     cout <<"1. Wyswietl arystki";
 
     gotoxy(15, 15);
@@ -1300,7 +1300,7 @@ void menu_sortowania()
 
 void start()
 {
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),279); //910 //253 //233 - zolty
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),677); //910 //253 //233 - zolty //279 - niebieski //674 - zielen
 
 }
 
