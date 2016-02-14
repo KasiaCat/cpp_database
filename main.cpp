@@ -60,9 +60,11 @@ public:
     void wyszukaj_imie();
     void wyszukaj_singiel();
     void wyszukaj_po_cenie();
+    void wyszukaj_po_imieniu_i_nazwisku();
     int ile_plyt_kupic( unsigned long int d );
     int usuwanie_wielu(int pierwszy, int drugi, int trzeci);
     void usun_wiele();
+    void sortowanie_malejace_po_wieku();
 };
 
 Artysci wykonawcy[MAX], pom;
@@ -190,6 +192,29 @@ void Artysci::sortowanie_po_wieku()
         } while (znacznik);
 
 }
+
+
+
+void Artysci::sortowanie_malejace_po_wieku()
+{
+    bool znacznik;;
+    int i;
+    int nr = 1;
+        do {
+            znacznik = false;
+            for (i = 1; i <= licznik - nr; i++)
+                if ( wykonawcy[i].wiek < wykonawcy[i + 1].wiek )
+                    {
+                        pom = wykonawcy[i];
+                        wykonawcy[i] = wykonawcy[i + 1];
+                        wykonawcy[i + 1] = pom;
+                        znacznik = true;
+                    }
+                nr++;
+        } while (znacznik);
+
+}
+
 
 void Artysci::sortowanie_po_imieniu()
 {
@@ -439,6 +464,52 @@ void Artysci::wyszukaj_imie()
         cout << "Brak artysty w bazie!";
 
 }
+
+
+void Artysci::wyszukaj_po_imieniu_i_nazwisku()
+{
+    string szukaneImie, szukaneNazwisko;
+    bool print_man_or_woman, ustaw;
+    int i = 0;
+
+    gotoxy(2, 2);
+    cout << "*************************************************************************" << endl;
+    gotoxy(16, 24);
+    cout << "Wpisz Imie: " << endl;
+    gotoxy (17, 26);
+    cout << " > ";
+    cin >> szukaneImie;
+
+    gotoxy(16, 28);
+    cout << "Wpisz nazwisko: " << endl;
+    gotoxy (17, 30);
+    cout << " > ";
+    cin >> szukaneNazwisko;
+    czyszczenie();
+
+    do {
+        if( ( szukaneImie == wykonawcy[i].imie ) && ( szukaneNazwisko == wykonawcy[i].imie ) )
+        {
+            ustaw = 1;
+            if (wykonawcy[i].kobieta_czy_mezczyzna == true)
+                        {
+                            print_man_or_woman = true;
+                        } else {
+                            print_man_or_woman = false;
+                        }
+
+            gotoxy(5, 13);
+            wykonawcy[i].listing_danych(print_man_or_woman);
+        }
+        i++;
+
+    } while (ustaw !=1 && i <= licznik );
+
+    if (i > licznik)
+        cout << "Brak artysty w bazie!";
+
+}
+
 
 
 void Artysci::wyszukaj_singiel()
@@ -900,13 +971,7 @@ void menu()
             else if (deal == 8)
                 menu();
 
-            else {
-                gotoxy(16, 23);
-                cout << "Wybierz 1 lub 0!" << endl;
-                Sleep(1000);
-            }
-
-            } while ( deal >=2 );
+            } while ( deal >= 2 );
 
             }
 
@@ -929,7 +994,7 @@ void menu()
         default:
             {
                 gotoxy(30, 20);
-                cout<< "Wybierz jeszcze raz!" << endl;
+                cout << "Wybierz jeszcze raz!" << endl;
                 Sleep(1000);
                 menu();
 
@@ -950,15 +1015,17 @@ void menu_wyszukiwania()
     gotoxy(22, 6);
     cout << "1. Wyszukaj wedlug imienia" << endl;
     gotoxy(22, 9);
-    cout << "2. Wyszukaj wedlug singla/nazwy plyty" << endl;
+    cout << "2. Wyszukaj wedlug imienia i nazwisko" << endl;
     gotoxy(22, 12);
-    cout << "3. Wyszukaj wedlug ceny albumu" << endl;
+    cout << "3. Wyszukaj wedlug singla/nazwy plyty" << endl;
     gotoxy(22, 15);
-    cout << "4. Wroc do menu glownego" << endl;
+    cout << "4. Wyszukaj wedlug ceny albumu" << endl;
+    gotoxy(22, 18);
+    cout << "5. Wroc do menu glownego" << endl;
 
-    gotoxy (32, 19);
-    cout << "Twoj wybor to: ";
     gotoxy (32, 21);
+    cout << "Twoj wybor to: ";
+    gotoxy (32, 23);
     cout << " > ";
     cin >> wybor;
     getchar();
@@ -975,24 +1042,32 @@ void menu_wyszukiwania()
 
         case '2':
                 czyszczenie();
-                wykonawcy[rekord].wyszukaj_singiel();
+                wykonawcy[rekord].wyszukaj_po_imieniu_i_nazwisku();
+
                 getchar();
                 getchar();
                 menu_wyszukiwania();
 
         case '3':
                 czyszczenie();
-                wykonawcy[rekord].wyszukaj_po_cenie();
+                wykonawcy[rekord].wyszukaj_singiel();
                 getchar();
                 getchar();
                 menu_wyszukiwania();
 
         case '4':
+                czyszczenie();
+                wykonawcy[rekord].wyszukaj_po_cenie();
+                getchar();
+                getchar();
+                menu_wyszukiwania();
+
+        case '5':
             menu();
 
         default:
             {
-                gotoxy(30, 19);
+                gotoxy(30, 21);
                 cout<< "Wybierz jeszcze raz!" << endl;
                 Sleep(1000);
                 menu_wyszukiwania();
@@ -1020,13 +1095,15 @@ void menu_sortowania()
     gotoxy(22, 14);
     cout << "4. Posortuj rosnaca wedlug wieku" << endl;
     gotoxy(22, 17);
-    cout << "5. Posortuj rosnaca wedlug imienia" << endl;
+    cout << "5. Posortuj malejaco wedlug wieku" << endl;
     gotoxy(22, 20);
-    cout << "6. Wroc do menu glownego" << endl;
+    cout << "6. Posortuj rosnaca wedlug imienia" << endl;
+    gotoxy(22, 23);
+    cout << "7. Wroc do menu glownego" << endl;
 
-    gotoxy (32, 24);
-    cout << "Twoj wybor to: ";
     gotoxy (32, 26);
+    cout << "Twoj wybor to: ";
+    gotoxy (32, 28);
     cout << " > ";
     cin >> wybor;
     getchar();
@@ -1074,7 +1151,7 @@ void menu_sortowania()
                 gotoxy(22, 9);
                 cout << "By posortowac wszystkich artystow i artystki ";
                 gotoxy(22, 10);
-                cout << "wedlug wieku, wcisnij enter" << endl;
+                cout << "rosnaco wedlug wieku, wcisnij enter" << endl;
                 gotoxy(22, 11);
                 getchar();
 
@@ -1086,6 +1163,19 @@ void menu_sortowania()
                 gotoxy(22, 9);
                 cout << "By posortowac wszystkich artystow i artystki ";
                 gotoxy(22, 10);
+                cout << "malejaco wedlug wieku, wcisnij enter" << endl;
+                gotoxy(22, 11);
+                getchar();
+
+                    wykonawcy[rekord].sortowanie_malejace_po_wieku();
+                    menu();
+
+
+        case '6':
+                czyszczenie();
+                gotoxy(22, 9);
+                cout << "By posortowac wszystkich artystow i artystki ";
+                gotoxy(22, 10);
                 cout << "wedlug imienia, wcisnij enter" << endl;
                 gotoxy(22, 11);
                 getchar();
@@ -1093,12 +1183,12 @@ void menu_sortowania()
                     wykonawcy[rekord].sortowanie_po_imieniu();
                     menu();
 
-        case '6':
+        case '7':
             menu();
 
         default:
             {
-                gotoxy(30, 24);
+                gotoxy(30, 26);
                 cout<< "Wybierz jeszcze raz!" << endl;
                 Sleep(1000);
                 menu_sortowania();
