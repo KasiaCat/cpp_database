@@ -35,6 +35,9 @@ void modyfikacje();
 
 
 class Artysci {
+private:
+    bool yes, znacznik;
+    int i, j, wybor;
 public:
     int numerNaLisciePrzebojow;
     bool kobieta_czy_mezczyzna;
@@ -137,12 +140,12 @@ void Artysci::sortowanie_po_ilosci_plyt()
 
 void Artysci::sortowanie_rosnace_po_singlu()
 {
-    bool znacznik;;
-    int i;
+    //bool znacznik;
+    //int i;
     int nr = 1;
         do {
             znacznik = false;
-            for (i = 1; i <= licznik - nr; i++)
+            for (i = 0; i <= licznik - nr; i++)
                 if ( wykonawcy[i].singiel > wykonawcy[i + 1].singiel )
                     {
                         pom = wykonawcy[i];
@@ -157,12 +160,12 @@ void Artysci::sortowanie_rosnace_po_singlu()
 
 void Artysci::sortowanie_rosnace_po_wieku()
 {
-    bool znacznik;;
-    int i;
+    //bool znacznik;
+    //int i;
     int nr = 1;
         do {
             znacznik = false;
-            for (i = 1; i <= licznik - nr; i++)
+            for (i = 0; i <= licznik - nr; i++)
                 if ( wykonawcy[i].wiek > wykonawcy[i + 1].wiek )
                     {
                         pom = wykonawcy[i];
@@ -177,12 +180,12 @@ void Artysci::sortowanie_rosnace_po_wieku()
 
 void Artysci::sortowanie_malejace_po_wieku()
 {
-    bool znacznik;;
-    int i;
+    //bool znacznik;
+    //int i;
     int nr = 1;
         do {
             znacznik = false;
-            for (i = 1; i <= licznik - nr; i++)
+            for (i = 0; i <= licznik - nr; i++)
                 if ( wykonawcy[i].wiek < wykonawcy[i + 1].wiek )
                     {
                         pom = wykonawcy[i];
@@ -197,12 +200,12 @@ void Artysci::sortowanie_malejace_po_wieku()
 
 void Artysci::sortowanie_rosnace_po_numerze()
 {
-    bool znacznik;;
-    int i;
+    //bool znacznik;
+    //int i;
     int nr = 1;
         do {
             znacznik = false;
-            for (i = 1; i <= licznik - nr; i++)
+            for (i = 0; i <= licznik - nr; i++)
                 if ( wykonawcy[i].numerNaLisciePrzebojow > wykonawcy[i + 1].numerNaLisciePrzebojow )
                     {
                         pom = wykonawcy[i];
@@ -217,12 +220,12 @@ void Artysci::sortowanie_rosnace_po_numerze()
 
 void Artysci::sortowanie_malejace_po_numerze()
 {
-    bool znacznik;;
-    int i;
+    //bool znacznik;
+    //int i;
     int nr = 1;
         do {
             znacznik = false;
-            for (i = 1; i <= licznik - nr; i++)
+            for (i = 0; i <= licznik - nr; i++)
                 if ( wykonawcy[i].numerNaLisciePrzebojow < wykonawcy[i + 1].numerNaLisciePrzebojow )
                     {
                         pom = wykonawcy[i];
@@ -237,12 +240,12 @@ void Artysci::sortowanie_malejace_po_numerze()
 
 void Artysci::sortowanie_po_imieniu()
 {
-    bool znacznik;
-    int i;
+    //bool znacznik;
+    //int i;
     int nr = 1;
         do {
             znacznik = false;
-            for (i = 1; i <= licznik - nr; i++)
+            for (i = 0; i <= licznik - nr; i++)
                 if ( wykonawcy[i].imie > wykonawcy[i + 1].imie )
                     {
                         pom = wykonawcy[i];
@@ -336,7 +339,7 @@ void Artysci::dodaj_rekord()
 
 void Artysci::edycja_albumu()
 {
-        int wybor;
+        //int wybor;
 
         gotoxy (5, 3);
         cout << "*************************************************************************" << endl;
@@ -441,7 +444,8 @@ void Artysci::edycja_albumu()
 
 int Artysci::usuwanie_rekordu(int do_usuniecia)
 {
-    int i, j;
+    //int i, j;
+    //bool yes;
     for (i = 0; i < licznik; i++)
     {
         if (wykonawcy[i].numerNaLisciePrzebojow == do_usuniecia)
@@ -449,6 +453,11 @@ int Artysci::usuwanie_rekordu(int do_usuniecia)
             for (j = i + 1; j < licznik; j++)
             {
                 wykonawcy[j - 1] = wykonawcy[j];
+                yes = true;
+                if (yes == false)
+                {
+                     wykonawcy[j - 1] = wykonawcy[j - 2];
+                }
             }
             --licznik;
             return do_usuniecia;
@@ -1265,7 +1274,7 @@ void menu_sortowania()
                 gotoxy(22, 9);
                 cout << "By posortowac wszystkich artystow i artystki ";
                 gotoxy(22, 10);
-                cout << "wedlug imienia, wcisnij enter" << endl;
+                cout << "wedlug numeru malejaco, wcisnij enter" << endl;
                 gotoxy(22, 11);
                 getchar();
 
@@ -1277,7 +1286,7 @@ void menu_sortowania()
                 gotoxy(22, 9);
                 cout << "By posortowac wszystkich artystow i artystki ";
                 gotoxy(22, 10);
-                cout << "wedlug imienia, wcisnij enter" << endl;
+                cout << "wedlug numeru rosnaco, wcisnij enter" << endl;
                 gotoxy(22, 11);
                 getchar();
 
